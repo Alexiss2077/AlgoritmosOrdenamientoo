@@ -102,7 +102,10 @@
             button3.Size = new Size(180, 54);
             button3.TabIndex = 9;
             button3.Text = "Shell Sort";
+            button3.Click += BtnShell_Click;
+
             button3.UseVisualStyleBackColor = false;
+        
             // 
             // button2
             // 

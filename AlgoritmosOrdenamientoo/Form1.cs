@@ -142,6 +142,13 @@ namespace AlgoritmosOrdenamientoo
         }
 
 
+        private void BtnShell_Click(object sender, EventArgs e)
+        {
+            EjecutarOrdenamiento(AlgoritmosOrdenamiento.ShellSort, "Shell Sort");
+        }
+
+
+
 
 
 
