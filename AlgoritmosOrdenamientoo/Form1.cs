@@ -136,6 +136,15 @@ namespace AlgoritmosOrdenamientoo
 
 
 
+        private void BtnHeapSort_Click(object sender, EventArgs e)
+        {
+            EjecutarOrdenamiento(AlgoritmosOrdenamiento.HeapSort, "Heap Sort");
+        }
+
+
+
+
+
 
     }
 }
