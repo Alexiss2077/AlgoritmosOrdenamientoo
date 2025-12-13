@@ -19,7 +19,7 @@ namespace AlgoritmosOrdenamientoo
             Divisiones = 0;
             Mezclas = 0;
         }
-        ////////// 1. Bubble Sort //////////
+        //1. Bubble Sort 
 
         public static void BubbleSort(int[] array)
         {
@@ -42,7 +42,6 @@ namespace AlgoritmosOrdenamientoo
                 if (!swapped) break;
             }
         }
-        /// ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 
         // 2. COCKTAIL SORT-BURBUJA BIDIRECCIONAL
@@ -139,9 +138,7 @@ namespace AlgoritmosOrdenamientoo
 
         ////5. Merge Sort
 
-        // =======================================================
         // MÉTODO MERGE 
-        // =======================================================
         public void Merge(List<int> myList, List<int> left, List<int> right)
         {
             Mezclas++;
@@ -189,9 +186,7 @@ namespace AlgoritmosOrdenamientoo
             }
         }
 
-        // =======================================================
         // MERGE SORT RECURSIVO
-        // =======================================================
         public void SortRecursivo(List<int> myList)
         {
             if (myList.Count <= 1)
@@ -212,9 +207,8 @@ namespace AlgoritmosOrdenamientoo
             Merge(myList, leftHalf, rightHalf);
         }
 
-        // =======================================================
+ 
         // MERGE SORT NATURAL
-        // =======================================================
         public void SortNatural(List<int> myList)
         {
             bool ordenado = false;
@@ -268,9 +262,7 @@ namespace AlgoritmosOrdenamientoo
             }
         }
 
-        // =======================================================
         // OBTENER RUNS NATURALES
-        // =======================================================
         public List<List<int>> GetNaturalRuns(List<int> myList)
         {
             List<List<int>> runs = new List<List<int>>();
@@ -368,10 +360,6 @@ namespace AlgoritmosOrdenamientoo
             ComparisonCount = comparisons;
             SwapCount = swaps;
         }
-
-
-
-
 
 
 
