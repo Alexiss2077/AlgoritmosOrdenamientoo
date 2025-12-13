@@ -107,12 +107,20 @@ namespace AlgoritmosOrdenamientoo
                 int actual = array[i];
                 int j = i - 1;
 
-                while (j >= 0 && array[j] > actual)
+                while (j >= 0)
                 {
-                    array[j + 1] = array[j];
-                    j--;
+                    ComparisonCount++;
+                    if (array[j] > actual)
+                    {
+                        array[j + 1] = array[j];
+                        SwapCount++;
+                        j--;
+                    }
+                    else
+                    {
+                        break;
+                    }
                 }
-
                 array[j + 1] = actual;
             }
         }
@@ -122,13 +130,10 @@ namespace AlgoritmosOrdenamientoo
 
         // / 4. Selection Sort
         ////Pendiente
-        ///
+            ///
 
 
-        ///// PENDIENTEEE
-
-
-
+            ///// PENDIENTEEE
 
 
 
@@ -136,9 +141,12 @@ namespace AlgoritmosOrdenamientoo
 
 
 
-        ////5. Merge Sort
 
-        // MÉTODO MERGE 
+
+
+            ////5. Merge Sort
+
+            // MÉTODO MERGE 
         public void Merge(List<int> myList, List<int> left, List<int> right)
         {
             Mezclas++;
