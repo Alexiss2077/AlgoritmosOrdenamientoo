@@ -126,7 +126,7 @@ namespace AlgoritmosOrdenamientoo
         ///
 
 
-
+        ///// PENDIENTEEE
 
 
 
@@ -138,8 +138,6 @@ namespace AlgoritmosOrdenamientoo
 
 
         ////5. Merge Sort
-        // Contadores de operaciones
-        
 
         // =======================================================
         // MÉTODO MERGE 
@@ -306,58 +304,69 @@ namespace AlgoritmosOrdenamientoo
 
         // 6. Heap Sort
 
-        public static void HeapSort(int[] arr)
+        private static void Heapify(int[] arr, int n, int i, ref int comparisons, ref int swaps)
         {
-            int n = arr.Length;
-
-            // Construir heap (montículo)
-            for (int i = n / 2 - 1; i >= 0; i--)
-                Heapify(arr, n, i);
-
-            // Extraer elementos uno por uno
-            for (int i = n - 1; i > 0; i--)
-            {
-                Swap(arr, 0, i); // cuenta intercambios
-
-                Heapify(arr, i, 0);
-            }
-        }
-
-        private static void Heapify(int[] arr, int n, int i)
-        {
+            // El mayor es la raíz del subárbol
             int largest = i;
             int l = 2 * i + 1;
             int r = 2 * i + 2;
 
-            // Comparaciones
             if (l < n)
             {
-                ComparisonCount++;
+                comparisons++;
                 if (arr[l] > arr[largest])
                     largest = l;
             }
 
             if (r < n)
             {
-                ComparisonCount++;
+                comparisons++;
                 if (arr[r] > arr[largest])
                     largest = r;
             }
 
-            // Si el hijo es mayor, intercambiar
+            // Intercambia elementos
             if (largest != i)
             {
-                Swap(arr, i, largest);
-                Heapify(arr, n, largest);
+                swaps++;
+                int swap = arr[i];
+                arr[i] = arr[largest];
+                arr[largest] = swap;
+                Heapify(arr, n, largest, ref comparisons, ref swaps);
             }
         }
-
-        private static void Swap(int[] arr, int i, int j)
+        public static void HeapSort(int[] arr, ref int comparisons, ref int swaps)
         {
-            SwapCount++;
-            int temp = arr[i];
-            arr[i] = arr[j];
-            arr[j] = temp;
+            int n = arr.Length;
+
+            // Construir Max-Heap. Desde el último nodo padre hacia la raíz
+            for (int i = n / 2 - 1; i >= 0; i--)
+                Heapify(arr, n, i, ref comparisons, ref swaps);
+
+            // Extraer elementos.
+            for (int i = n - 1; i > 0; i--)
+            {
+                swaps++;
+                int temp = arr[0];
+                arr[0] = arr[i];
+                arr[i] = temp;
+                // Reparar el heap reducido
+                Heapify(arr, i, 0, ref comparisons, ref swaps);
+            }
+
+        }
+
+
+        // WRAPPER PARA HEAP SORT
+        public static void HeapSortWrapper(int[] arr)
+        {
+            int comparisons = 0;
+            int swaps = 0;
+
+            HeapSort(arr, ref comparisons, ref swaps);
+
+            ComparisonCount = comparisons;
+            SwapCount = swaps;
         }
 
 
@@ -365,7 +374,9 @@ namespace AlgoritmosOrdenamientoo
 
 
 
-        // 7. Heap Sort
+
+
+        // 7. Shell Sort
 
         public static void ShellSort(int[] arr)
         {
@@ -390,6 +401,238 @@ namespace AlgoritmosOrdenamientoo
         }
 
 
+
+
+        // 8. Gnome Sort
+        public static void GnomeSort(int[] array)
+        {
+            int index = 0;
+
+            // Recorremos el array hasta ordenar
+            while (index < array.Length)
+            {
+                // (opcional) contar la comprobación del while si quieres medirla:
+                ComparisonCount++; // cuenta la comprobación index < array.Length
+
+                // Si estamos en la primera posición, avanzamos
+                if (index == 0)
+                {
+                    index++;
+                    continue;
+                }
+
+                // Comparamos el elemento actual con el anterior
+                ComparisonCount++; // cuenta la comparación array[index] >= array[index - 1]
+                if (array[index] >= array[index - 1])
+                {
+                    // si está en orden, avanzamos
+                    index++;
+                }
+                else
+                {
+                    // si no, intercambiamos y retrocedemos
+                    Exchange(array, index, index - 1);
+                    index--;
+                }
+            }
+        }
+
+
+
+        // 9. Counting Sort
+
+        public static void CountingSort(int[] arr)
+        {
+            int n = arr.Length;
+
+            // Obtener el valor máximo para definir el rango
+            int max = arr[0];
+            for (int i = 1; i < n; i++)
+            {
+                AlgoritmosOrdenamiento.ComparisonCount++;
+                if (arr[i] > max)
+                    max = arr[i];
+            }
+
+            int[] count = new int[max + 1];
+            int[] output = new int[n];
+
+            // Conteo de ocurrencias
+            for (int i = 0; i < n; i++)
+            {
+                count[arr[i]]++;
+                AlgoritmosOrdenamiento.ComparisonCount++;
+            }
+
+            // Conteo acumulado
+            for (int i = 1; i <= max; i++)
+            {
+                count[i] += count[i - 1];
+                AlgoritmosOrdenamiento.ComparisonCount++;
+            }
+
+            // Construcción del arreglo ordenado
+            for (int i = n - 1; i >= 0; i--)
+            {
+                output[count[arr[i]] - 1] = arr[i];
+                count[arr[i]]--;
+                AlgoritmosOrdenamiento.SwapCount++;
+            }
+
+            // Copiar al arreglo original
+            for (int i = 0; i < n; i++)
+            {
+                arr[i] = output[i];
+                AlgoritmosOrdenamiento.SwapCount++;
+            }
+        }
+
+
+
+        // 10. Bucket Sort
+
+
+        public static void BucketSort(int[] arr)
+        {
+            if (arr == null || arr.Length == 0)
+                return;
+
+            int n = arr.Length;
+
+            // Buscar valor máximo
+            int max = arr[0];
+            for (int i = 1; i < n; i++)
+            {
+                ComparisonCount++;
+                if (arr[i] > max)
+                    max = arr[i];
+            }
+
+            // Definir número de buckets
+            int bucketCount = (int)Math.Sqrt(n); // criterio común
+            List<int>[] buckets = new List<int>[bucketCount];
+
+            for (int i = 0; i < bucketCount; i++)
+                buckets[i] = new List<int>();
+
+            //Distribuir elementos en buckets (por rangos)
+            for (int i = 0; i < n; i++)
+            {
+                int index = (arr[i] * bucketCount) / (max + 1);
+                buckets[index].Add(arr[i]);
+                SwapCount++;
+            }
+
+            //Ordenar cada bucket (Insertion Sort)
+            for (int i = 0; i < bucketCount; i++)
+            {
+                for (int j = 1; j < buckets[i].Count; j++)
+                {
+                    int key = buckets[i][j];
+                    int k = j - 1;
+
+                    while (k >= 0)
+                    {
+                        ComparisonCount++;
+                        if (buckets[i][k] > key)
+                        {
+                            buckets[i][k + 1] = buckets[i][k];
+                            SwapCount++;
+                            k--;
+                        }
+                        else
+                            break;
+                    }
+
+                    buckets[i][k + 1] = key;
+                    SwapCount++;
+                }
+            }
+
+            //Reconstruir el arreglo final
+            int idx = 0;
+            for (int i = 0; i < bucketCount; i++)
+            {
+                foreach (int num in buckets[i])
+                {
+                    arr[idx++] = num;
+                    SwapCount++;
+                }
+            }
+        }
+
+
+
+        // 11. Radix Sort
+
+        public static void RadixSort(int[] arr)
+        {
+            if (arr == null || arr.Length == 0)
+                return;
+
+            // 1️⃣ Encontrar el máximo (manual, contando operaciones)
+            int max = arr[0];
+            for (int i = 1; i < arr.Length; i++)
+            {
+                ComparisonCount++;
+                if (arr[i] > max)
+                    max = arr[i];
+            }
+
+            // 2️⃣ Aplicar Counting Sort por cada dígito
+            for (int exp = 1; max / exp > 0; exp *= 10)
+            {
+                CountingSortByDigit(arr, exp);
+            }
+        }
+
+        private static void CountingSortByDigit(int[] arr, int exp)
+        {
+            int n = arr.Length;
+            int[] output = new int[n];
+            int[] count = new int[10];
+
+            // Conteo de dígitos
+            for (int i = 0; i < n; i++)
+            {
+                int digit = (arr[i] / exp) % 10;
+                count[digit]++;
+                ComparisonCount++;
+            }
+
+            // Acumulación
+            for (int i = 1; i < 10; i++)
+            {
+                count[i] += count[i - 1];
+            }
+
+            // Construcción estable del arreglo
+            for (int i = n - 1; i >= 0; i--)
+            {
+                int digit = (arr[i] / exp) % 10;
+                output[count[digit] - 1] = arr[i];
+                count[digit]--;
+                SwapCount++;
+            }
+
+            // Copiar al arreglo original
+            for (int i = 0; i < n; i++)
+            {
+                arr[i] = output[i];
+                SwapCount++;
+            }
+        }
+
+        ///////////////////////////////////////////////////////////////////////////////////
+
+
+
+
+
     }
+
+
 }
+
+
 

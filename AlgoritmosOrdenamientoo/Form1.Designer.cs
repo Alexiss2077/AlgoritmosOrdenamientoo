@@ -340,6 +340,7 @@
             button4.Size = new Size(180, 54);
             button4.TabIndex = 10;
             button4.Text = "Gnome Sort";
+            button4.Click += BtnGnome_Click;
             button4.UseVisualStyleBackColor = false;
             // 
             // label1
@@ -364,6 +365,7 @@
             button5.TabIndex = 10;
             button5.Text = "Counting Sort";
             button5.UseVisualStyleBackColor = false;
+            button5.Click += BtnCounting_Click;
             // 
             // button6
             // 
@@ -377,6 +379,7 @@
             button6.TabIndex = 10;
             button6.Text = "Bucket Sort";
             button6.UseVisualStyleBackColor = false;
+            button6.Click += BtnBucket_Click;
             // 
             // button7
             // 
@@ -390,6 +393,7 @@
             button7.TabIndex = 10;
             button7.Text = "Radix Sort";
             button7.UseVisualStyleBackColor = false;
+            button7.Click += BtnRadix_Click;
             // 
             // Form1
             // 
@@ -414,6 +418,11 @@
             splitContainer.ResumeLayout(false);
             ResumeLayout(false);
             PerformLayout();
+        }
+
+        private void Button6_Click(object sender, EventArgs e)
+        {
+            throw new NotImplementedException();
         }
 
         #endregion

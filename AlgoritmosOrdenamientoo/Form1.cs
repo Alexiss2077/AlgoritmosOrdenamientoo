@@ -136,10 +136,13 @@ namespace AlgoritmosOrdenamientoo
 
 
 
+
+
         private void BtnHeapSort_Click(object sender, EventArgs e)
         {
-            EjecutarOrdenamiento(AlgoritmosOrdenamiento.HeapSort, "Heap Sort");
+            EjecutarOrdenamiento(AlgoritmosOrdenamiento.HeapSortWrapper, "Heap Sort");
         }
+        
 
 
         private void BtnShell_Click(object sender, EventArgs e)
@@ -147,7 +150,30 @@ namespace AlgoritmosOrdenamientoo
             EjecutarOrdenamiento(AlgoritmosOrdenamiento.ShellSort, "Shell Sort");
         }
 
+        private void BtnGnome_Click(object sender, EventArgs e)
+        {
+            EjecutarOrdenamiento(AlgoritmosOrdenamiento.GnomeSort, "Gnome Sort");
+        }
 
+
+
+        private void BtnCounting_Click(object sender, EventArgs e)
+        {
+            EjecutarOrdenamiento(AlgoritmosOrdenamiento.CountingSort, "Counting Sort");
+        }
+
+
+        private void BtnBucket_Click(object sender, EventArgs e)
+        {
+            EjecutarOrdenamiento(AlgoritmosOrdenamiento.BucketSort, "Counting Sort");
+        }
+
+
+
+        private void BtnRadix_Click(object sender, EventArgs e)
+        {
+            EjecutarOrdenamiento(AlgoritmosOrdenamiento.RadixSort, "Counting Sort");
+        }
 
 
 
