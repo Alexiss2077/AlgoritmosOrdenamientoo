@@ -165,16 +165,21 @@ namespace AlgoritmosOrdenamientoo
 
         private void BtnBucket_Click(object sender, EventArgs e)
         {
-            EjecutarOrdenamiento(AlgoritmosOrdenamiento.BucketSort, "Counting Sort");
+            EjecutarOrdenamiento(AlgoritmosOrdenamiento.BucketSort, "Bucket Sort");
         }
 
 
 
         private void BtnRadix_Click(object sender, EventArgs e)
         {
-            EjecutarOrdenamiento(AlgoritmosOrdenamiento.RadixSort, "Counting Sort");
+            EjecutarOrdenamiento(AlgoritmosOrdenamiento.RadixSort, "Radix Sort");
         }
 
+
+         private void BtnSelection_Click(object sender, EventArgs e)
+        {
+            EjecutarOrdenamiento(AlgoritmosOrdenamiento.SelectionSort, "Selection Sort");
+        }
 
 
 

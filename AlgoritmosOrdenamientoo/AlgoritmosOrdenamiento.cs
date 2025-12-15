@@ -129,11 +129,32 @@ namespace AlgoritmosOrdenamientoo
 
 
         // / 4. Selection Sort
-        ////Pendiente
-            ///
 
+        public static void SelectionSort(int[] arr)
+        {
+            /// <param name="arr">La lista de enteros a ordenar.</param>
+            int n = arr.Length;
+            for (int i = 0; i < n - 1; i++)
+            {
+                int min_idx = i;
+                for (int j = i + 1; j < n; j++)
+                {
+                    ComparisonCount++;
+                    if (arr[j] < arr[min_idx])
+                    {
+                        min_idx = j;
+                    }
+                }
+                if (min_idx != i)
+                {
+                    int temp = arr[min_idx];
+                    arr[min_idx] = arr[i];
+                    arr[i] = temp;
+                    SwapCount++;
+                }
+            }
+        }
 
-            ///// PENDIENTEEE
 
 
 

@@ -134,6 +134,7 @@
             button1.TabIndex = 0;
             button1.Text = "Selection Sort";
             button1.UseVisualStyleBackColor = false;
+            button1.Click += BtnSelection_Click;
             // 
             // lblSizeTitle
             // 
@@ -418,6 +419,11 @@
             splitContainer.ResumeLayout(false);
             ResumeLayout(false);
             PerformLayout();
+        }
+
+        private void Button1_Click(object sender, EventArgs e)
+        {
+            throw new NotImplementedException();
         }
 
         private void Button6_Click(object sender, EventArgs e)
