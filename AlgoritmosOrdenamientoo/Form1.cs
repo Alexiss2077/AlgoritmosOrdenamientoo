@@ -33,16 +33,15 @@ namespace AlgoritmosOrdenamientoo
             foreach (int x in data)
                 lbOriginal.Items.Add(x);
 
-            
+            // Reiniciar TODOS los contadores
             AlgoritmosOrdenamiento.ComparisonCount = 0;
             AlgoritmosOrdenamiento.SwapCount = 0;
             AlgoritmosOrdenamiento.ShiftCount = 0;
+            AlgoritmosOrdenamiento.AccessCount = 0;
+            AlgoritmosOrdenamiento.AssignmentCount = 0;
 
             int[] copia = (int[])data.Clone();
-
-            // MEDIR EL TIEMPO
-            Stopwatch sw = new Stopwatch();
-            sw.Start();
+            Stopwatch sw = Stopwatch.StartNew();
             metodo(copia);
             sw.Stop();
 
@@ -50,7 +49,7 @@ namespace AlgoritmosOrdenamientoo
             foreach (int x in copia)
                 lbSorted.Items.Add(x);
 
-            // Mostrar estadísticas según el algoritmo
+            // Mostrar estadísticas según el tipo de algoritmo
             if (nombre.Contains("Shell"))
             {
                 lblStats.Text =
@@ -59,18 +58,28 @@ namespace AlgoritmosOrdenamientoo
                     $"Comparaciones: {AlgoritmosOrdenamiento.ComparisonCount}\n" +
                     $"Desplazamientos: {AlgoritmosOrdenamiento.ShiftCount}";
             }
+            else if (nombre.Contains("Counting") || nombre.Contains("Bucket") || nombre.Contains("Radix"))
+            {
+                //Algoritmos NO basados en comparación
+                lblStats.Text =
+                    $"{nombre}\n\n" +
+                    $"Tiempo: {sw.Elapsed.TotalMilliseconds:F4} ms\n" +
+                    $"Accesos: {AlgoritmosOrdenamiento.AccessCount}\n" +
+                    $"Asignaciones: {AlgoritmosOrdenamiento.AssignmentCount}";
+            }
             else
             {
+                // Algoritmos basados en comparación normales
                 lblStats.Text =
                     $"{nombre}\n\n" +
                     $"Tiempo: {sw.Elapsed.TotalMilliseconds:F4} ms\n" +
                     $"Comparaciones: {AlgoritmosOrdenamiento.ComparisonCount}\n" +
                     $"Intercambios: {AlgoritmosOrdenamiento.SwapCount}";
             }
+
             lblDivisiones.Text = "Divisiones: 0";
             lblMezclas.Text = "Mezclas: 0";
         }
-
 
 
 

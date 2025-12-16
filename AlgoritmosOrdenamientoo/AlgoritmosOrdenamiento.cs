@@ -11,6 +11,10 @@ namespace AlgoritmosOrdenamientoo
         public static long ComparisonCount = 0;
         public static long ShiftCount = 0;
 
+        //Contadores para algoritmos NO basados en comparación
+        public static long AccessCount = 0;      // Accesos a memoria
+        public static long AssignmentCount = 0;  // Asignaciones
+
         // Contadores para Merge Sort
         public int Divisiones { get; set; }
         public int Mezclas { get; set; }
@@ -455,7 +459,7 @@ namespace AlgoritmosOrdenamientoo
             int max = arr[0];
             for (int i = 1; i < n; i++)
             {
-                AlgoritmosOrdenamiento.ComparisonCount++;
+                AccessCount++;
                 if (arr[i] > max)
                     max = arr[i];
             }
@@ -467,14 +471,14 @@ namespace AlgoritmosOrdenamientoo
             for (int i = 0; i < n; i++)
             {
                 count[arr[i]]++;
-                AlgoritmosOrdenamiento.ComparisonCount++;
+                AccessCount++;
             }
 
             // Conteo acumulado
             for (int i = 1; i <= max; i++)
             {
                 count[i] += count[i - 1];
-                AlgoritmosOrdenamiento.ComparisonCount++;
+                AssignmentCount++;
             }
 
             // Construcción del arreglo ordenado
@@ -482,14 +486,14 @@ namespace AlgoritmosOrdenamientoo
             {
                 output[count[arr[i]] - 1] = arr[i];
                 count[arr[i]]--;
-                AlgoritmosOrdenamiento.SwapCount++;
+                AssignmentCount++;
             }
 
             // Copiar al arreglo original
             for (int i = 0; i < n; i++)
             {
                 arr[i] = output[i];
-                AlgoritmosOrdenamiento.SwapCount++;
+                AssignmentCount++;
             }
         }
 
@@ -506,7 +510,7 @@ namespace AlgoritmosOrdenamientoo
             int max = arr[0];
             for (int i = 1; i < n; i++)
             {
-                ComparisonCount++;
+                AccessCount++;
                 if (arr[i] > max)
                     max = arr[i];
             }
@@ -523,7 +527,7 @@ namespace AlgoritmosOrdenamientoo
             {
                 int index = (arr[i] * bucketCount) / (max + 1);
                 buckets[index].Add(arr[i]);
-                SwapCount++;
+                AssignmentCount++;
             }
 
             //Ordenar cada bucket (Insertion Sort)
@@ -536,11 +540,11 @@ namespace AlgoritmosOrdenamientoo
 
                     while (k >= 0)
                     {
-                        ComparisonCount++;
+                        AccessCount++;
                         if (buckets[i][k] > key)
                         {
                             buckets[i][k + 1] = buckets[i][k];
-                            SwapCount++;
+                            AssignmentCount++;
                             k--;
                         }
                         else
@@ -548,7 +552,7 @@ namespace AlgoritmosOrdenamientoo
                     }
 
                     buckets[i][k + 1] = key;
-                    SwapCount++;
+                    AssignmentCount++;
                 }
             }
 
@@ -559,7 +563,7 @@ namespace AlgoritmosOrdenamientoo
                 foreach (int num in buckets[i])
                 {
                     arr[idx++] = num;
-                    SwapCount++;
+                    AssignmentCount++;
                 }
             }
         }
@@ -575,7 +579,7 @@ namespace AlgoritmosOrdenamientoo
             int max = arr[0];
             for (int i = 1; i < arr.Length; i++)
             {
-                ComparisonCount++;
+                AccessCount++;
                 if (arr[i] > max)
                     max = arr[i];
             }
@@ -598,13 +602,14 @@ namespace AlgoritmosOrdenamientoo
             {
                 int digit = (arr[i] / exp) % 10;
                 count[digit]++;
-                ComparisonCount++;
+                AccessCount++;
             }
 
             // Acumulación
             for (int i = 1; i < 10; i++)
             {
                 count[i] += count[i - 1];
+                AssignmentCount++;
             }
 
             // Construcción estable del arreglo
@@ -613,14 +618,14 @@ namespace AlgoritmosOrdenamientoo
                 int digit = (arr[i] / exp) % 10;
                 output[count[digit] - 1] = arr[i];
                 count[digit]--;
-                SwapCount++;
+                AssignmentCount++;
             }
 
             // Copiar al arreglo original
             for (int i = 0; i < n; i++)
             {
                 arr[i] = output[i];
-                SwapCount++;
+                AssignmentCount++;
             }
         }
 
