@@ -6,7 +6,7 @@ namespace AlgoritmosOrdenamientoo
 {
     internal class AlgoritmosOrdenamiento
     {
-        //Contadores para comparaciones e intercambios
+        //Contadores para comparaciones, intercambios y movimientos
         public static long SwapCount = 0;
         public static long ComparisonCount = 0;
         public static long ShiftCount = 0;
@@ -95,8 +95,6 @@ namespace AlgoritmosOrdenamientoo
             array[index2] = temp;
             SwapCount++;
         }
-
-
 
 
         /// 3. Insertion Sort
@@ -363,7 +361,7 @@ namespace AlgoritmosOrdenamientoo
         }
 
 
-        // WRAPPER PARA HEAP SORT
+        // WRAPPER PARA HEAP SORT PARA MANDAR A LLAMAR DESDE FORM1
         public static void HeapSortWrapper(int[] arr)
         {
             int comparisons = 0;
@@ -391,19 +389,25 @@ namespace AlgoritmosOrdenamientoo
                     int j = i;
 
                     // Bucle para la inserción ordenada con el salto (gap)
-                    while (j >= gap && arr[j - gap] > temp)
+                    while (j >= gap)
                     {
-                        ComparisonCount++; // 1. Contar la comparación (arr[j - gap] > temp)
+                        ComparisonCount++; // Contar cada comparación
 
-                        arr[j] = arr[j - gap];
-                        ShiftCount++; // 2. Contar el desplazamiento
-                        j -= gap;
+                        if (arr[j - gap] > temp)
+                        {
+                            arr[j] = arr[j - gap];
+                            ShiftCount++; // Contar el desplazamiento
+                            j -= gap;
+                        }
+                        else
+                        {
+                            break; // Salir si ya está en posición correcta
+                        }
                     }
-                    arr[j] = temp;
 
+                    arr[j] = temp;
                 }
             }
-
         }
 
 
@@ -567,7 +571,7 @@ namespace AlgoritmosOrdenamientoo
             if (arr == null || arr.Length == 0)
                 return;
 
-            // 1️⃣ Encontrar el máximo (manual, contando operaciones)
+            // Encontrar el máximo (manual, contando operaciones)
             int max = arr[0];
             for (int i = 1; i < arr.Length; i++)
             {
@@ -576,7 +580,7 @@ namespace AlgoritmosOrdenamientoo
                     max = arr[i];
             }
 
-            // 2️⃣ Aplicar Counting Sort por cada dígito
+            // Aplicar Counting Sort por cada dígito
             for (int exp = 1; max / exp > 0; exp *= 10)
             {
                 CountingSortByDigit(arr, exp);

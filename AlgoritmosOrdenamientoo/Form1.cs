@@ -9,9 +9,7 @@ namespace AlgoritmosOrdenamientoo
             InitializeComponent();
         }
 
-        // ==========================================
         //   GENERAR ARREGLO ALEATORIO
-        // ==========================================
         private int[] GenerarArreglo(int n)
         {
             Random r = new Random();
@@ -23,52 +21,60 @@ namespace AlgoritmosOrdenamientoo
             return arr;
         }
 
-        // ==========================================
+
+
+
         //  MÉTODO PARA EJECUTAR ALGORITMOS
-        // ==========================================
-
-
         private void EjecutarOrdenamiento(Action<int[]> metodo, string nombre)
         {
             int n = (int)nudSize.Value;
-
             int[] data = GenerarArreglo(n);
-
             lbOriginal.Items.Clear();
             foreach (int x in data)
                 lbOriginal.Items.Add(x);
 
+            
             AlgoritmosOrdenamiento.ComparisonCount = 0;
             AlgoritmosOrdenamiento.SwapCount = 0;
+            AlgoritmosOrdenamiento.ShiftCount = 0;
 
             int[] copia = (int[])data.Clone();
 
             // MEDIR EL TIEMPO
             Stopwatch sw = new Stopwatch();
             sw.Start();
-
-            metodo(copia);  
-
+            metodo(copia);
             sw.Stop();
 
             lbSorted.Items.Clear();
             foreach (int x in copia)
                 lbSorted.Items.Add(x);
 
-            lblStats.Text =
-                $"{nombre}\n\n" +
-                $"Comparaciones: {AlgoritmosOrdenamiento.ComparisonCount}\n" +
-                $"Intercambios: {AlgoritmosOrdenamiento.SwapCount}\n" +
-                $"Movimientos: {AlgoritmosOrdenamiento.ShiftCount}\n" +
-                $"Tiempo: {sw.Elapsed.TotalMilliseconds:F4} ms";
+            // Mostrar estadísticas según el algoritmo
+            if (nombre.Contains("Shell"))
+            {
+                lblStats.Text =
+                    $"{nombre}\n\n" +
+                    $"Tiempo: {sw.Elapsed.TotalMilliseconds:F4} ms\n" +
+                    $"Comparaciones: {AlgoritmosOrdenamiento.ComparisonCount}\n" +
+                    $"Desplazamientos: {AlgoritmosOrdenamiento.ShiftCount}";
+            }
+            else
+            {
+                lblStats.Text =
+                    $"{nombre}\n\n" +
+                    $"Tiempo: {sw.Elapsed.TotalMilliseconds:F4} ms\n" +
+                    $"Comparaciones: {AlgoritmosOrdenamiento.ComparisonCount}\n" +
+                    $"Intercambios: {AlgoritmosOrdenamiento.SwapCount}";
+            }
+            lblDivisiones.Text = "Divisiones: 0";
+            lblMezclas.Text = "Mezclas: 0";
         }
 
 
 
 
-        // ==========================================
         //   EVENTOS DE BOTONES
-        // ==========================================
         private void BtnBubble_Click(object sender, EventArgs e)
         {
             EjecutarOrdenamiento(AlgoritmosOrdenamiento.BubbleSort, "Bubble Sort");
@@ -185,7 +191,7 @@ namespace AlgoritmosOrdenamientoo
             EjecutarOrdenamiento(AlgoritmosOrdenamiento.RadixSort, "Radix Sort");
         }
 
-         private void BtnSelection_Click(object sender, EventArgs e)
+        private void BtnSelection_Click(object sender, EventArgs e)
         {
             EjecutarOrdenamiento(AlgoritmosOrdenamiento.SelectionSort, "Selection Sort");
         }
