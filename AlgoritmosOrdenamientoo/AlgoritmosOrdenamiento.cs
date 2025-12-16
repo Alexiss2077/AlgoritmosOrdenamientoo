@@ -9,8 +9,9 @@ namespace AlgoritmosOrdenamientoo
         //Contadores para comparaciones e intercambios
         public static long SwapCount = 0;
         public static long ComparisonCount = 0;
+        public static long ShiftCount = 0;
 
-
+        // Contadores para Merge Sort
         public int Divisiones { get; set; }
         public int Mezclas { get; set; }
 
@@ -20,7 +21,6 @@ namespace AlgoritmosOrdenamientoo
             Mezclas = 0;
         }
         //1. Bubble Sort 
-
         public static void BubbleSort(int[] array)
         {
             int n = array.Length;
@@ -126,10 +126,7 @@ namespace AlgoritmosOrdenamientoo
         }
 
 
-
-
         // / 4. Selection Sort
-
         public static void SelectionSort(int[] arr)
         {
             /// <param name="arr">La lista de enteros a ordenar.</param>
@@ -157,17 +154,8 @@ namespace AlgoritmosOrdenamientoo
 
 
 
-
-
-
-
-
-
-
-
-            ////5. Merge Sort
-
-            // MÉTODO MERGE 
+        ////5. Merge Sort
+        // MÉTODO MERGE 
         public void Merge(List<int> myList, List<int> left, List<int> right)
         {
             Mezclas++;
@@ -236,7 +224,7 @@ namespace AlgoritmosOrdenamientoo
             Merge(myList, leftHalf, rightHalf);
         }
 
- 
+
         // MERGE SORT NATURAL
         public void SortNatural(List<int> myList)
         {
@@ -321,10 +309,7 @@ namespace AlgoritmosOrdenamientoo
 
 
 
-
-
         // 6. Heap Sort
-
         private static void Heapify(int[] arr, int n, int i, ref int comparisons, ref int swaps)
         {
             // El mayor es la raíz del subárbol
@@ -394,7 +379,6 @@ namespace AlgoritmosOrdenamientoo
 
 
         // 7. Shell Sort
-
         public static void ShellSort(int[] arr)
         {
             int n = arr.Length;
@@ -406,18 +390,21 @@ namespace AlgoritmosOrdenamientoo
                     int temp = arr[i];
                     int j = i;
 
+                    // Bucle para la inserción ordenada con el salto (gap)
                     while (j >= gap && arr[j - gap] > temp)
                     {
+                        ComparisonCount++; // 1. Contar la comparación (arr[j - gap] > temp)
+
                         arr[j] = arr[j - gap];
+                        ShiftCount++; // 2. Contar el desplazamiento
                         j -= gap;
                     }
-
                     arr[j] = temp;
+
                 }
             }
+
         }
-
-
 
 
         // 8. Gnome Sort
@@ -455,9 +442,7 @@ namespace AlgoritmosOrdenamientoo
         }
 
 
-
         // 9. Counting Sort
-
         public static void CountingSort(int[] arr)
         {
             int n = arr.Length;
@@ -505,10 +490,7 @@ namespace AlgoritmosOrdenamientoo
         }
 
 
-
         // 10. Bucket Sort
-
-
         public static void BucketSort(int[] arr)
         {
             if (arr == null || arr.Length == 0)
@@ -579,9 +561,7 @@ namespace AlgoritmosOrdenamientoo
         }
 
 
-
         // 11. Radix Sort
-
         public static void RadixSort(int[] arr)
         {
             if (arr == null || arr.Length == 0)
@@ -639,11 +619,6 @@ namespace AlgoritmosOrdenamientoo
                 SwapCount++;
             }
         }
-
-        ///////////////////////////////////////////////////////////////////////////////////
-
-
-
 
 
     }

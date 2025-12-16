@@ -1,3 +1,5 @@
+using System.Diagnostics;
+
 namespace AlgoritmosOrdenamientoo
 {
     public partial class Form1 : Form
@@ -22,40 +24,47 @@ namespace AlgoritmosOrdenamientoo
         }
 
         // ==========================================
-        //  MÉTODO GENÉRICO PARA EJECUTAR ALGORITMOS
+        //  MÉTODO PARA EJECUTAR ALGORITMOS
         // ==========================================
+
+
         private void EjecutarOrdenamiento(Action<int[]> metodo, string nombre)
         {
             int n = (int)nudSize.Value;
 
             int[] data = GenerarArreglo(n);
 
-            // Mostrar el arreglo original
             lbOriginal.Items.Clear();
             foreach (int x in data)
                 lbOriginal.Items.Add(x);
 
-            // Reiniciar contadores
             AlgoritmosOrdenamiento.ComparisonCount = 0;
             AlgoritmosOrdenamiento.SwapCount = 0;
 
-            // Copia para ordenar
             int[] copia = (int[])data.Clone();
 
-            // Ejecutar el algoritmo
-            metodo(copia);
+            // MEDIR EL TIEMPO
+            Stopwatch sw = new Stopwatch();
+            sw.Start();
 
-            // Mostrar el ordenado
+            metodo(copia);  
+
+            sw.Stop();
+
             lbSorted.Items.Clear();
             foreach (int x in copia)
                 lbSorted.Items.Add(x);
 
-            // Mostrar estadísticas
             lblStats.Text =
                 $"{nombre}\n\n" +
                 $"Comparaciones: {AlgoritmosOrdenamiento.ComparisonCount}\n" +
-                $"Intercambios: {AlgoritmosOrdenamiento.SwapCount}";
+                $"Intercambios: {AlgoritmosOrdenamiento.SwapCount}\n" +
+                $"Movimientos: {AlgoritmosOrdenamiento.ShiftCount}\n" +
+                $"Tiempo: {sw.Elapsed.TotalMilliseconds:F4} ms";
         }
+
+
+
 
         // ==========================================
         //   EVENTOS DE BOTONES
@@ -75,76 +84,82 @@ namespace AlgoritmosOrdenamientoo
             EjecutarOrdenamiento(AlgoritmosOrdenamiento.InsertSort, "Insertion Sort");
         }
 
-
-        // ==========================================
-        //   NUEVOS HANDLERS: MERGE DIRECTO
-        // ==========================================
         private void BtnMergeDirecto_Click(object sender, EventArgs e)
         {
             int n = (int)nudSize.Value;
+
             int[] data = GenerarArreglo(n);
 
-            // Mostrar original
+            // Mostrar ORIGINAL
             lbOriginal.Items.Clear();
-            foreach (int x in data) lbOriginal.Items.Add(x);
+            foreach (int x in data)
+                lbOriginal.Items.Add(x);
 
-            // Crear instancia de merge
+            //COPIA 
+            List<int> copia = new List<int>(data);
+
+            // Instancia del algoritmo
             AlgoritmosOrdenamiento alg = new AlgoritmosOrdenamiento();
-            List<int> lista = new List<int>(data);
 
-            // Ejecutar merge sort recursivo
-            alg.SortRecursivo(lista);
+            Stopwatch sw = Stopwatch.StartNew();
 
-            // Mostrar ordenado
+            // Ejecutar Merge Sort Directo
+            alg.SortRecursivo(copia);
+
+            sw.Stop();
+
+            // Mostrar ORDENADO
             lbSorted.Items.Clear();
-            foreach (int x in lista) lbSorted.Items.Add(x);
+            foreach (int x in copia)
+                lbSorted.Items.Add(x);
 
-            // Mostrar divisiones y mezclas
+            // Métricas
             lblDivisiones.Text = $"Divisiones: {alg.Divisiones}";
             lblMezclas.Text = $"Mezclas: {alg.Mezclas}";
-
             lblStats.Text = "Merge Sort Directo";
+            lblStats.Text += $"\nTiempo: {sw.Elapsed.TotalMilliseconds:F4} ms";
+            
+            
         }
 
-
-        // ==========================================
-        //   NUEVOS HANDLERS: MERGE NATURAL
-        // ==========================================
         private void BtnMergeNatural_Click(object sender, EventArgs e)
         {
             int n = (int)nudSize.Value;
+
             int[] data = GenerarArreglo(n);
 
-            // Mostrar original
+            // Mostrar ORIGINAL
             lbOriginal.Items.Clear();
-            foreach (int x in data) lbOriginal.Items.Add(x);
+            foreach (int x in data)
+                lbOriginal.Items.Add(x);
+
+            //COPIA
+            List<int> copia = new List<int>(data);
 
             AlgoritmosOrdenamiento alg = new AlgoritmosOrdenamiento();
-            List<int> lista = new List<int>(data);
 
-            alg.SortNatural(lista);
+            Stopwatch sw = Stopwatch.StartNew();
+            // Ejecutar Merge Sort Natural
+            alg.SortNatural(copia);
+            sw.Stop();
 
-            // Mostrar ordenado
+            // Mostrar ORDENADO
             lbSorted.Items.Clear();
-            foreach (int x in lista) lbSorted.Items.Add(x);
+            foreach (int x in copia)
+                lbSorted.Items.Add(x);
 
+            // Métricas
             lblDivisiones.Text = $"Divisiones: {alg.Divisiones}";
             lblMezclas.Text = $"Mezclas: {alg.Mezclas}";
-
             lblStats.Text = "Merge Sort Natural";
+            lblStats.Text += $"\nTiempo: {sw.Elapsed.TotalMilliseconds:F4} ms";
         }
-
-
-
-
 
         private void BtnHeapSort_Click(object sender, EventArgs e)
         {
             EjecutarOrdenamiento(AlgoritmosOrdenamiento.HeapSortWrapper, "Heap Sort");
         }
         
-
-
         private void BtnShell_Click(object sender, EventArgs e)
         {
             EjecutarOrdenamiento(AlgoritmosOrdenamiento.ShellSort, "Shell Sort");
@@ -155,34 +170,25 @@ namespace AlgoritmosOrdenamientoo
             EjecutarOrdenamiento(AlgoritmosOrdenamiento.GnomeSort, "Gnome Sort");
         }
 
-
-
         private void BtnCounting_Click(object sender, EventArgs e)
         {
             EjecutarOrdenamiento(AlgoritmosOrdenamiento.CountingSort, "Counting Sort");
         }
-
 
         private void BtnBucket_Click(object sender, EventArgs e)
         {
             EjecutarOrdenamiento(AlgoritmosOrdenamiento.BucketSort, "Bucket Sort");
         }
 
-
-
         private void BtnRadix_Click(object sender, EventArgs e)
         {
             EjecutarOrdenamiento(AlgoritmosOrdenamiento.RadixSort, "Radix Sort");
         }
 
-
          private void BtnSelection_Click(object sender, EventArgs e)
         {
             EjecutarOrdenamiento(AlgoritmosOrdenamiento.SelectionSort, "Selection Sort");
         }
-
-
-
 
     }
 }
